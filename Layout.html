@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Layout</title>
+    <style>
+        div {
+            background-color: lightgreen;
+            margin-top: 10px;
+            text-align: center;
+            height: 50px;
+        }
+
+
+        .Navigation {
+            width: 100px;
+            overflow: hidden;
+            transition: width 2s, height 1s;
+            height: 20px;
+        }
+
+        .Navigation:hover {
+            width: 100%;
+            height:40px;
+        }
+
+        .Content {
+            float: left;
+            height: 160px;
+        }
+
+        .Content.Main
+        {
+            width: 75%;
+            background-color: rgb(67, 207, 67);
+        }
+
+        .Content.Side
+        {
+            width: 25%;
+            overflow: hidden;
+        }
+
+        .Navigation {
+  overflow: hidden;
+  background-color: #333;
+}
+
+/* Style the topnav links */
+.Navigation a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.Navigation a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+        .Footer {
+            float: right;
+            width:100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="Header">Header</div>
+    <div class="Navigation">
+        <a href="#">Link</a>
+        <a href="#">Link</a>
+        <a href="#">Link</a>
+
+    </div>
+    <div class="Content Main">Content 1
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." 
+    </div>
+    <div class="Content Side">Content 2
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." 
+    </div>
+    <div class="Footer">Footer</div>
+</body>
+</html>
