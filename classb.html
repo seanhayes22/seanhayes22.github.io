@@ -2,10 +2,9 @@
 <html>
   <head>
     <title>Computing B</title>
-  </head>
-  <style>
-    table, td, th {
-      border: 1px solid black;
+    <style>
+      table, td, th {
+        border: 1px solid black;
       border-collapse: collapse;
       padding: 5px 10px;
       
@@ -14,23 +13,57 @@
       font-size: 20px;
       font-weight: bold;
     }
-
+    
     tr:nth-child(even) {
       background-color:lightgray;
     }
     body {
       text-align: center;
     }
-
+    
     td a {
       width: 100%;
       background-color: yellow;
       display:block;
     }
-
+    
     div{ width:100px; height:30px; background-color:red;}
-  </style>
+    ul {
+      list-style-type: none;
+      margin:0;
+      padding:0;
+      overflow: hidden;
+      background-color: black;
+    }
+    
+    li {
+      float: left;
+    }
+    
+    li a {
+      color: white;
+      display: block;
+      background-color:grey;
+      text-decoration: none;
+      padding: 5px;
+      text-align: center;
+    }
+    
+    li a:hover {
+      background-color: lightgrey;
+      color:grey;
+    }
+    
+    </style>
+  </head>
   <body>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="classb.html">Class B</a></li>
+      <li><a href="mytimetable.html">Timetable</a></li>
+      <li><a href="position.html">Position</a></li>
+      <li><a href="transform.html">Transform</a></li>
+    </ul>
     <table style="margin-left:40%">
       <caption>Computing B Class Website Links</caption>
       <tr>
@@ -142,6 +175,5 @@
         <td></td>
       </tr>
     </table>
-    <a href="index.html">Home</a>
   </body>
 </html>
