@@ -1,27 +1,3 @@
-let number = 0;
-let name = 'Sean';
-
-function myName()
-{
-    number++;
-    document.getElementById('mydiv').innerHTML = name + " has " + number + " cookies.";
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function Disappear()
 {
     document.getElementById('mydiv').style.display = 'none';
