@@ -14,19 +14,9 @@ function Reappear()
 
 function newFunc()
 {
-    let pie = "";
-    let choice;
-
-    let userInput = prompt("What is your name?","");
-    while(choice = confirm("Are you"+pie+" sure?"))
-    {
-        pie += pie + " really";
-    }
-    if(!choice)
-    {
-        alert("I thought so.");
-    }
-
+    let colour = prompt("What is your favourite colour?");
+    document.getElementById("mydiv").style.backgroundColor = colour;
+    alert("Like this?");
 }
 
 function getRndInteger(min, max) {
