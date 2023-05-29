@@ -25,7 +25,8 @@ function myChange(colorVal)
     }
     if(red != null && blue != null && green != null)
     {
-        document.getElementById('mydiv').style.backgroundColor = "rgb("+red+","+green+","+blue+")";   
+        document.getElementById('mydiv').style.backgroundColor = `rgb(${red},${green},${blue})`; 
+        document.getElementById('mydiv').innerHTML = `${red}, ${green}, ${blue}`;  
     }
 }
 
