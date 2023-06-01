@@ -63,3 +63,14 @@ function daisy()
     let dandelion = document.getElementById('rose').value;
     document.getElementById('mydiv').innerHTML = dandelion;
 }
+
+
+
+function myCalculator()
+{
+
+    let calculation = 5 % 2;
+
+
+    document.getElementById('text').innerHTML = calculation;
+}
