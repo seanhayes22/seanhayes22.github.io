@@ -68,9 +68,6 @@ function daisy()
 
 function myCalculator()
 {
-
-    let calculation = 5 % 2;
-
-
-    document.getElementById('text').innerHTML = calculation;
+    let x = 8, y = 3, z = "5";
+    console.log(x > y && z > y);
 }
