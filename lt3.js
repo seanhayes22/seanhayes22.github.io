@@ -50,9 +50,7 @@ function guessNum()
         // 2.0f * x, 2.0f * (1 - x), 0
         let x = Math.abs(myGuess - randomNum)/myMax;
         let red = 2 * x * 255;
-        //console.log(red);
         let green = 2 * (1-x) * 255;
-        //console.log(green);
         document.getElementById("theBody").style.backgroundColor = `rgb(${red}, ${green}, 0)`;
         console.log(`rgb(${red}, ${green}, 0)`);
     }
