@@ -9,13 +9,15 @@
 <body onload="loadPage()" id="theBody">
 
     <div id="myDiv">
-        <h1 id="heading1">Guess the number</h1>
+        <h1 id="heading1">Guess the number (1-100)</h1>
         <input type="text" onchange="guessNum()" id="myGuess">
-        <button onclick="loadPage()">Reset</button>
-        <button onclick="setMinMax()">Set limit</button>
+        <button onclick="resetGame()">Reset</button>
+        <button onclick="setMax()">Set limit</button>
         <p id="guesses">Guesses Left: 10</p>
-        <div id="perfectGreen"></div>
-        <div id="perfectRed"></div>
+        <div id="container">
+            <div id="perfectGreen"></div>
+            <div id="perfectRed"></div>
+        </div>
     </div>
     
     <script src="lt3.js"></script>
