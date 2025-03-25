@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #somediv {
+        width: 100px;
+        height: 100px;
+        background-color: yellow;
+        position: relative;
+        }
+
+        #svg {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div id="somediv">
+        <!--This div is 100px * 100px, I need to draw a line 4px thick from (23, 24) to (87, 96)-->
+       <svg id="svg" width="100" height="100"> 
+          <line 
+            style="cursor:pointer"
+            id="theline" 
+            x1="50" y1="1" x2="50" y2="100" stroke="black" stroke-width="1"/>
+       </svg>
+    </div>
+</body>
+</html>
