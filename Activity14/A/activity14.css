@@ -1,0 +1,13 @@
+#Paul {
+    border: 2px solid red;
+    width:400px;
+    height: 200px;
+    text-align: center;
+    background-color: gold;
+    font-size: 30px;
+    padding-top:50px;
+}
+
+#Mary {
+    padding: 20px;
+}
