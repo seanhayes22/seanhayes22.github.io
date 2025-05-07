@@ -16,10 +16,20 @@ function toggle()
 function welcome()
 {
     let myName = prompt('What is your name?')
-    document.getElementById('jennifer').innerText = "Hello, " + myName + " have a nice day";
 
-    // String interpolation
-    //document.getElementById('jennifer').innerText = `Hello, ${myName} have a nice day`;
+    if(myName == "Sean")
+    // True
+    {
+        document.getElementById('jennifer').innerText = "Hello, " + myName + " have a nice day";
+    }
+    // False
+    else {
+        document.getElementById('jennifer').innerText = "Hello, " + myName + " have a bad day";
+    }
+
+
+
+
 }
 /////  TODAY ////////////////
 function birthdayColour()
