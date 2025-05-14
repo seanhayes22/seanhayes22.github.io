@@ -1,6 +1,7 @@
 let randomNum = -1
 let score = 0
 let guesses = 0
+let newGame = false;
 
 function reset()
 {
@@ -16,17 +17,38 @@ function reset()
 
 }
 
+function randomNumber()
+{
+    let minimum = prompt("Enter your minimum");
+    let maximum = prompt("Enter your maximum");
+    let theRandomNumber = getRndInteger(Number(minimum), Number(maximum));
+
+    document.getElementById("guess").innerText = theRandomNumber;
+}
+
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
 function guess()
 {
+    if(newGame)
+    {
+        newGame = false;
+        reset();
+        return;
+    }
     let guess = prompt("Pick a number")
+    if(guess == null || isNaN(guess) || guess == "")
+    {
+        document.getElementById("guess").innerText = "Please enter a valid number"
+        return;
+    }
     guesses++
     if(guess == randomNum)
     {
         document.getElementById('guess').innerText = `You guessed it!\nIt took you ${guesses} guesses`;
+        newGame = true;
     }
     else if (guess > randomNum)   
     {
