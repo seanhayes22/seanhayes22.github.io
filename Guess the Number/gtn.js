@@ -26,18 +26,14 @@ function randomNumber()
     document.getElementById("guess").innerText = theRandomNumber;
 }
 
-function getRndInteger(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) ) + min;
-}
-
 function guess()
 {
     if(newGame)
-    {
-        newGame = false;
-        reset();
-        return;
-    }
+        {
+            newGame = false;
+            reset();
+            return;
+        }
     let guess = prompt("Pick a number")
     if(guess == null || isNaN(guess) || guess == "")
     {
@@ -57,5 +53,36 @@ function guess()
     else
     {
         document.getElementById('guess').innerText = "Higher than " + guess;
+    }
+}
+
+function getRndInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+
+let myRandomNumber = 0
+
+function resetButton()
+{
+    myRandomNumber = getRndInteger(Number(prompt("Enter min")), 100)
+    console.log(myRandomNumber);
+}
+
+function makeGuess()
+{
+    let myUserInput = document.getElementById("guessInput").value;
+
+    if(myRandomNumber == myUserInput)
+    {
+        document.getElementById('guessOutput').innerText = "Well done, you got it";
+        resetButton();
+    }
+    else if(myRandomNumber < myUserInput)
+    {
+        document.getElementById('guessOutput').innerText = "Too High";
+    }
+    else if(myRandomNumber > myUserInput)
+    {
+        document.getElementById('guessOutput').innerText = "Too Low";
     }
 }

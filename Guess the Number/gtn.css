@@ -25,3 +25,18 @@ button {
 #guess {
     font-size: 60px;
 }
+
+.version2 {
+    color:lightblue;
+    margin: auto;
+    width: 50%;
+    height: 50%;
+    border: 3px solid rgb(238, 12, 12);
+    padding: 10px;
+    background-color:rgba(49, 49, 49, 0.831)
+}
+
+#guessInput {
+    font-size: 40px;
+    width: 80%;
+}
