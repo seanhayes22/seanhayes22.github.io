@@ -3,6 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Student Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Apply the Inter font family to the entire body */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5; /* Light grey background for the body */
+            color: #333;
+        }
+
+        /* Header styling */
+        .header {
+            background-color: #4CAF50; /* Green background for the header */
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            /* position: fixed makes the header stick to the top of the viewport */
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Ensures the header stays on top of other content */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            border-bottom-left-radius: 10px; /* Rounded corners for the bottom */
+            border-bottom-right-radius: 10px;
+        }
+
+        /* Navigation bar styling */
+        .navbar ul {
+            list-style-type: none; /* Removes bullet points from the list */
+            margin: 0;
+            padding: 0;
+            display: flex; /* Uses flexbox for horizontal layout */
+            justify-content: center; /* Centers the navigation items */
+            gap: 20px; /* Space between navigation items */
+        }
+
+        .navbar li a {
+            display: block; /* Makes the entire link area clickable */
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none; /* Removes underline from links */
+            transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+            border-radius: 8px; /* Slightly rounded corners for nav links */
+        }
+
+        /* Pseudoclass: :hover effect for navigation links */
+        .navbar li a:hover {
+            background-color: #5cb85c; /* Lighter green on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Pseudoclass: :active effect for navigation links (when clicked) */
+        .navbar li a:active {
+            background-color: #3d8b3d; /* Darker green when active */
+            transform: translateY(0); /* Resets lift effect */
+            box-shadow: none;
+        }
+
+        /* Main content area to push content below the fixed header */
+        .main-content {
+            padding-top: 100px; /* Adjust this value based on header height */
+            padding-bottom: 50px;
+            max-width: 900px;
+            margin: 20px auto; /* Centers the main content block */
+            background-color: #ffffff; /* White background for content */
+            border-radius: 12px; /* Rounded corners for the main content block */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px 30px;
+            line-height: 1.6;
+        }
+
+        /* Section styling */
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #f9f9f9; /* Slightly off-white for sections */
+            border-radius: 10px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Inner shadow */
+            position: relative; /* Parent for absolute positioning example */
+        }
+
+        .section h2 {
+            color: #28a745; /* Darker green for section titles */
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Image styling */
+        .profile-img {
+            max-width: 150px; /* Maximum width for the image */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 50%; /* Makes the image circular */
+            display: block; /* Allows margin auto for centering */
+            margin: 0 auto 20px auto; /* Centers the image and adds bottom margin */
+            border: 4px solid #4CAF50; /* Green border around the image */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Shadow for the image */
+        }
+
+        /* Paragraph styling */
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Collapses borders into a single line */
+            margin-top: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden; /* Ensures rounded corners apply to content */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd; /* Light grey border for cells */
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #e9ecef; /* Light grey background for table headers */
+            color: #495057;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* Zebra striping for table rows */
+        }
+
+        /* List styling */
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Example of position: absolute within a relative parent */
+        .floating-note {
+            position: absolute; /* Positions relative to the nearest positioned ancestor (.section) */
+            top: 20px;
+            right: 20px;
+            background-color: #ffeb3b; /* Yellow background */
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer styling */
+        .footer {
+            background-color: #343a40; /* Dark grey background for the footer */
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 40px;
+            border-top-left-radius: 10px; /* Rounded corners for the top */
+            border-top-right-radius: 10px;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .navbar ul {
+                flex-direction: column; /* Stack nav items vertically on small screens */
+                gap: 10px;
+            }
+
+            .navbar li a {
+                padding: 10px 15px;
+            }
+
+            .main-content {
+                margin: 10px;
+                padding: 15px;
+                padding-top: 80px; /* Adjust for smaller header on mobile */
+            }
+
+            .header {
+                padding: 0.5rem 0;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>My Student Portfolio</h1>
+        <div class="navbar">
+            <ul>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#projects">My Projects</a></li>
+                <li><a href="#schedule">My Schedule</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+
+        <div id="about" class="section">
+            <h2>About Me</h2>
+            <img src="https://placehold.co/150x150/4CAF50/FFFFFF?text=Student" alt="Profile Picture" class="profile-img">
+            <p>
+                Hello! My name is Alex and I am a high school student passionate about web development, science, and creative writing. I enjoy learning new technologies and exploring how they can be used to solve real-world problems. This portfolio is a small showcase of my journey and some of the things I've been working on.
+            </p>
+            <p>
+                I'm currently in Year 10 and looking forward to exploring more advanced topics in computer science next year. Outside of academics, I love playing basketball and reading sci-fi novels.
+            </p>
+            <div class="floating-note">
+                <p>A little note!</p>
+            </div>
+        </div>
+
+        <div id="projects" class="section">
+            <h2>My Projects</h2>
+            <ul>
+                <li>
+                    <p><strong>Project Alpha:</strong> A simple calculator built using JavaScript, HTML, and CSS. It handles basic arithmetic operations.</p>
+                    <a href="https://example.com/project-alpha" target="_blank">View Project Alpha (External Link)</a>
+                </li>
+                <li>
+                    <p><strong>Science Fair Data Visualization:</strong> Used a library to visualize climate data for my science fair project. Focused on making complex data understandable.</p>
+                    <a href="https://example.com/science-project" target="_blank">Explore Science Project</a>
+                </li>
+                <li>
+                    <p><strong>Creative Writing Blog:</strong> A collection of short stories and poems I've written, hosted on a free blogging platform.</p>
+                    <a href="https://example.com/my-blog" target="_blank">Read My Blog</a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="schedule" class="section">
+            <h2>My Weekly Schedule</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>8:30 AM</td>
+                        <td>Math</td>
+                        <td>Science</td>
+                        <td>English</td>
+                        <td>History</td>
+                        <td>Math</td>
+                    </tr>
+                    <tr>
+                        <td>9:30 AM</td>
+                        <td>Science</td>
+                        <td>English</td>
+                        <td>Math</td>
+                        <td>Science</td>
+                        <td>History</td>
+                    </tr>
+                    <tr>
+                        <td>10:30 AM</td>
+                        <td>Break</td>
+                        <td>Break</td>
+                        <td>Break</td>
+                        <td>Break</td>
+                        <td>Break</td>
+                    </tr>
+                    <tr>
+                        <td>11:00 AM</td>
+                        <td>History</td>
+                        <td>Math</td>
+                        <td>Science</td>
+                        <td>English</td>
+                        <td>Art</td>
+                    </tr>
+                    <tr>
+                        <td>1:00 PM</td>
+                        <td>Lunch</td>
+                        <td>Lunch</td>
+                        <td>Lunch</td>
+                        <td>Lunch</td>
+                        <td>Lunch</td>
+                    </tr>
+                    <tr>
+                        <td>2:00 PM</td>
+                        <td>Coding Club</td>
+                        <td>Basketball Practice</td>
+                        <td>Debate Club</td>
+                        <td>Study Group</td>
+                        <td>Free Period</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="contact" class="section">
+            <h2>Contact Me</h2>
+            <p>
+                Feel free to reach out if you have any questions or just want to connect!
+            </p>
+            <p>Email: <a href="mailto:alex.student@example.com">alex.student@example.com</a></p>
+            <ol>
+                <li>Connect on <a href="https://example.com/linkedin" target="_blank">LinkedIn</a> (fictional)</li>
+                <li>Follow my (fictional) <a href="https://example.com/twitter" target="_blank">Twitter</a></li>
+            </ol>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Alex's Student Portfolio. All rights reserved.</p>
+    </div>
+
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="LT2.css">
     <title>Learning Task 2</title>
 </head>
@@ -67,4 +408,4 @@
 </div>
 
 </body>
-</html>
+</html> -->
