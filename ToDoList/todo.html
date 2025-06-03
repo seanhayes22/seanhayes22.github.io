@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <style>
+        body {
+            background-color: rgba(128, 128, 128, 0.363);
+            margin:0;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+        .main {
+            max-width: 900px;
+            background-color: grey;
+        }
+        .header
+        {
+            margin-top: 50px;
+            padding-top: 10px;
+            color:azure;
+            font-size: 40px;
+            text-align: center;
+        }
+
+        .AddItem {
+            display:flex;
+            justify-content: center;
+            font-size: 30px;
+            padding: 30px;
+        }
+
+        .todo {
+            background-color: antiquewhite;
+        }
+        #addButton {
+            background-color: green;
+            font-size: 20px;
+            color:azure;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="header">
+            My To Do List
+        </div>
+        <div class="AddItem">
+            <input id="toDoItem">
+            <button onclick="AddItem()" id="addButton">Add</button>
+        </div>
+        <div class="todo" id="todolist">
+
+        </div>
+    </div>
+    <script>
+        let todoList = []
+
+        function AddItem()
+        {
+            let newToDoItem = document.getElementById("toDoItem").value;
+            todoList.push(newToDoItem);
+            DisplayItems();
+        }
+
+        function DisplayItems()
+        {
+            document.getElementById("todolist").innerText = "";
+            for(let i = 0; i < todoList.length; i++)
+            {
+                document.getElementById("todolist").innerText += `${i + 1} - ${todoList[i]}\n`;
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My To-Do List</title>
+    <style>
+        /* Custom font for better aesthetics */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top to allow scrolling */
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 2.5rem; /* Increased padding */
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            width: 100%;
+            max-width: 600px; /* Max width for larger screens */
+            box-sizing: border-box;
+            margin-top: 50px; /* Space from the top */
+        }
+        .input-group {
+            display: flex;
+            gap: 1rem; /* Space between input and button */
+            margin-bottom: 2rem; /* More space below input group */
+        }
+        .todo-input {
+            flex-grow: 1;
+            padding: 0.8rem 1rem; /* Adjust padding */
+            border: 2px solid #d1d5db; /* Light gray border */
+            border-radius: 0.75rem; /* Rounded input field */
+            outline: none;
+            font-size: 1rem;
+            transition: border-color 0.2s ease-in-out;
+        }
+        .todo-input:focus {
+            border-color: #6366f1; /* Indigo on focus */
+        }
+        .add-button {
+            background-color: #6366f1; /* Indigo */
+            color: white;
+            padding: 0.8rem 1.5rem; /* Adjust padding */
+            border-radius: 0.75rem; /* Rounded button */
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); /* Button shadow */
+        }
+        .add-button:hover {
+            background-color: #4f46e5; /* Darker indigo on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+        .add-button:active {
+            transform: translateY(0); /* Press effect */
+        }
+        .todo-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f9fafb; /* Lighter background for items */
+            padding: 1rem 1.25rem; /* Adjust padding */
+            border-radius: 0.75rem; /* Rounded item corners */
+            margin-bottom: 0.75rem; /* Space between items */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle item shadow */
+            transition: transform 0.2s ease-in-out;
+        }
+        .todo-list-item:hover {
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+        .todo-text {
+            flex-grow: 1;
+            font-size: 1.1rem;
+            color: #374151; /* Darker text color */
+        }
+        .delete-button {
+            background-color: #ef4444; /* Red */
+            color: white;
+            padding: 0.5rem 0.75rem; /* Smaller padding for delete button */
+            border-radius: 0.5rem; /* Rounded delete button */
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .delete-button:hover {
+            background-color: #dc2626; /* Darker red on hover */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .container {
+                padding: 1.5rem;
+                margin-top: 20px;
+            }
+            .input-group {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            .add-button {
+                width: 100%;
+            }
+            .todo-list-item {
+                flex-direction: column; /* Stack text and button on small screens */
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            .delete-button {
+                align-self: flex-end; /* Align delete button to bottom right */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-8">My To-Do List</h1>
+
+        <div class="input-group">
+            <input type="text" id="todoInput" placeholder="Add a new task..." class="todo-input">
+            <button id="addButton" class="add-button">Add Task</button>
+        </div>
+
+        <div id="todoList" class="todo-list">
+            </div>
+    </div>
+
+    <script>
+        // Array to store to-do items
+        let todos = [];
+
+        // Get references to DOM elements
+        const todoInput = document.getElementById('todoInput');
+        const addButton = document.getElementById('addButton');
+        const todoList = document.getElementById('todoList');
+
+        /**
+         * Renders the to-do list based on the 'todos' array.
+         * Clears the current list and re-creates all items.
+         */
+        function renderTodoList() {
+            // Clear existing list items
+            todoList.innerHTML = '';
+
+            // Loop through the todos array and create HTML for each item
+            todos.forEach((todoText, index) => {
+                const todoItem = document.createElement('div');
+                todoItem.classList.add('todo-list-item');
+
+                const textSpan = document.createElement('span');
+                textSpan.classList.add('todo-text');
+                textSpan.textContent = todoText;
+
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('delete-button');
+                deleteButton.textContent = 'Delete';
+                // Attach a click event listener to the delete button
+                deleteButton.addEventListener('click', () => {
+                    deleteTodoItem(index);
+                });
+
+                // Append text and button to the to-do item div
+                todoItem.appendChild(textSpan);
+                todoItem.appendChild(deleteButton);
+
+                // Append the to-do item div to the to-do list container
+                todoList.appendChild(todoItem);
+            });
+        }
+
+        /**
+         * Adds a new to-do item to the 'todos' array.
+         * Gets the value from the input field, adds it, and re-renders the list.
+         */
+        function addTodoItem() {
+            const newTodo = todoInput.value.trim(); // Get input value and remove whitespace
+
+            if (newTodo !== '') { // Only add if the input is not empty
+                todos.push(newTodo); // Add the new item to the array
+                todoInput.value = ''; // Clear the input field
+                renderTodoList(); // Re-render the list to show the new item
+            }
+        }
+
+        /**
+         * Deletes a to-do item from the 'todos' array at a specific index.
+         *
+         * @param {number} index - The index of the item to delete.
+         */
+        function deleteTodoItem(index) {
+            // Remove the item from the array using splice
+            // splice(startIndex, deleteCount)
+            todos.splice(index, 1);
+            renderTodoList(); // Re-render the list after deletion
+        }
+
+        // Add event listener to the "Add Task" button
+        addButton.addEventListener('click', addTodoItem);
+
+        // Allow adding tasks by pressing Enter key in the input field
+        todoInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                addTodoItem();
+            }
+        });
+
+        // Initial render of the to-do list when the page loads
+        // This is important if you were loading initial data (e.g., from local storage)
+        renderTodoList();
+    </script>
+</body>
+</html>
