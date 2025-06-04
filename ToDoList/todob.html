@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+</head>
+<body>
+    <input id="todoInput">
+    <button onclick="AddItemToList()">Add To List</button>
+
+    <div id="myOutput"></div>
+
+    <script>
+        let todoList = []
+
+        function AddItemToList()
+        {
+            let newItem = document.getElementById('todoInput').value;
+            todoList.push(newItem);
+            document.getElementById('myOutput').innerText = todoList;
+        }
+    </script>
+</body>
+</html>
