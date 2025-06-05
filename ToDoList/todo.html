@@ -39,6 +39,11 @@
             font-size: 20px;
             color:azure;
         }
+        .deleteButton {
+            background-color: red;
+            color: white;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -48,7 +53,7 @@
         </div>
         <div class="AddItem">
             <input id="toDoItem">
-            <button onclick="AddItemButton()" id="addButton">Add</button>
+            <button onclick="AddItem()" id="addButton">Add</button>
         </div>
         <div class="todo" id="todolist">
 
@@ -57,6 +62,9 @@
     <script src="todo.js"></script>
     <script>
         let todoList = []
+
+       
+
 
         function AddItem()
         {
@@ -67,11 +75,34 @@
 
         function DisplayItems()
         {
-            document.getElementById("todolist").innerText = "";
+            document.getElementById("toDoItem").value = "";
+            document.getElementById("todolist").innerHTML = "";
             for(let i = 0; i < todoList.length; i++)
             {
-                document.getElementById("todolist").innerText += `${i + 1} - ${todoList[i]}\n`;
+                const myDiv = document.createElement('div');
+                
+                const todoListItem = document.createElement('span');
+                todoListItem.innerText = `${i + 1} - ${todoList[i]}`;
+                todoListItem.classList.add('todo')
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.innerText = 'Delete';
+                deleteBtn.classList.add('deleteButton')
+
+                document.getElementById('todolist').appendChild(myDiv);
+                myDiv.appendChild(todoListItem);
+                myDiv.appendChild(deleteBtn);
+
+                deleteBtn.addEventListener('click', () => {
+                    deleteItem(i);
+                });
             }
+        }
+
+        function deleteItem(index)
+        {
+            todoList.splice(index, 1);
+            DisplayItems();
         }
 
     </script>
