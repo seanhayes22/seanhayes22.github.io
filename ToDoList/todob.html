@@ -35,11 +35,20 @@
     <script>
         let todoList = []
 
+        document.getElementById('todoInput').addEventListener('keypress', (event) => {
+            if(event.key === 'Enter')
+            {
+                AddItemToList();
+            }
+        });
+
         function AddItemToList()
         {
             let newItem = document.getElementById('todoInput').value;
+            if(newItem === "") { return; }
             todoList.push(newItem);
             UpdateItems();
+            document.getElementById('todoInput').value = "";
         }
 
         function UpdateItems()
