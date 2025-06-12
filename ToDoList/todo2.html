@@ -117,7 +117,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="loadFunction()">
     <div class="container">
         <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-8">My To-Do List</h1>
 
@@ -133,12 +133,18 @@
     <script>
         // Array to store to-do items
         let todos = [];
-
         // Get references to DOM elements
         const todoInput = document.getElementById('todoInput');
         const addButton = document.getElementById('addButton');
         const todoList = document.getElementById('todoList');
+        
 
+        function loadFunction()
+        {
+            todos = getCookie("ToDoList").split(',')
+            if(todos[0] == "") { todos = [] };
+            renderTodoList();
+        }
         /**
          * Renders the to-do list based on the 'todos' array.
          * Clears the current list and re-creates all items.
@@ -185,6 +191,8 @@
                 todoInput.value = ''; // Clear the input field
                 renderTodoList(); // Re-render the list to show the new item
             }
+            saveToDoList();
+
         }
 
         /**
@@ -197,6 +205,8 @@
             // splice(startIndex, deleteCount)
             todos.splice(index, 1);
             renderTodoList(); // Re-render the list after deletion
+            saveToDoList();
+
         }
 
         // Add event listener to the "Add Task" button
@@ -211,7 +221,46 @@
 
         // Initial render of the to-do list when the page loads
         // This is important if you were loading initial data (e.g., from local storage)
-        renderTodoList();
+        //renderTodoList();
+        
+        function saveToDoList() {
+            let saveCookie = ""
+            todos.forEach((text) =>
+            {
+                saveCookie += text + ","
+            });
+            const d = new Date();
+            d.setTime(d.getTime() + (2 * 24 * 60 * 60 * 1000));
+            let expires = "expires="+d.toUTCString();
+            document.cookie = `ToDoList=${saveCookie};expires=${expires}`;
+            console.log("Saved");
+        }
+
+        function getCookie(cookieName)
+        {
+            let temp = document.cookie.split(';')
+            for(let i = 0; i < temp.length; i++)
+            {
+                if(temp[i].indexOf(cookieName) !== -1)
+                    return temp[i].substring(cookieName.length+1, temp[i].length-1)
+            }
+        }
+/*
+        function getCookie(cname) {
+            let name = cname + "=";
+            let ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+*/
     </script>
 </body>
 </html>

@@ -61,16 +61,35 @@
     </div>
     <script src="todo.js"></script>
     <script>
-        let todoList = []
+        let todoList = [];
 
+
+
+        function saveCookie()
+        {
+            let cookieName = "ToDoList";
+            document.cookie = `${cookieName}=${todoList}`;
+        }
        
+        getCookies();
 
+        function getCookies()
+        {
+            let myCookies = document.cookie.split("; ");
+            let cookieName = "ToDoList";
+            for(let i = 0; i < myCookies.length; i++)
+            {
+                
+            }   
+            console.log(myCookies);
+        }
 
         function AddItem()
         {
             let newToDoItem = document.getElementById("toDoItem").value;
             todoList.push(newToDoItem);
             DisplayItems();
+            saveCookie()
         }
 
         function DisplayItems()
