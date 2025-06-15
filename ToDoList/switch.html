@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switches</title>
+</head>
+<body>
+    <div id="switch1" class="switch">On</div>
+    <button onclick="MySwitch(1)">1</button>
+    <div id="switch2" class="switch">On</div>
+    <button onclick="switch2()">2</button>
+    <div id="switch3" class="switch">On</div>
+    <button onclick="switch3()">3</button>
+    <div id="switch4" class="switch">On</div>
+    <button onclick="switch4()">4</button>
+    <div id="switch5" class="switch">On</div>
+    <button onclick="switch5()">5</button>
+    <div id="switch6" class="switch">On</div>
+    <button onclick="switch6()">6</button>
+    <div id="switch7" class="switch">On</div>
+    <button onclick="switch7()">7</button>
+    
+    <script>
+        let allSwitches = document.getElementsByClassName("switch");
+
+        function MySwitch(index)
+        {
+            switch(index)
+            {
+                case 1:
+                    document.getElementById('switch1').innerText = "Off"
+                    document.getElementById('switch4').innerText = "Off"
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
