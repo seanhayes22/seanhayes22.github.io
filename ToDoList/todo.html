@@ -77,7 +77,11 @@
             let cookieName = "ToDoList";
             for(let i = 0; i < myCookies.length; i++)
             {
-                
+                if(myCookies[i].indexOf(cookieName) !== -1)
+                {
+                    if(myCookies[i].indexOf('=') !== myCookies[i].length -1)
+                        todoList = myCookies[i].substring(cookieName.length, myCookies[i].length-1).split(',')   
+                }
             }   
             console.log(myCookies);
         }
