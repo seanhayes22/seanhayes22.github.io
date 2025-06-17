@@ -4,36 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Switches</title>
+    <style>
+        div {
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div id="switch1" class="switch">On</div>
-    <button onclick="MySwitch(1)">1</button>
-    <div id="switch2" class="switch">On</div>
-    <button onclick="switch2()">2</button>
-    <div id="switch3" class="switch">On</div>
-    <button onclick="switch3()">3</button>
-    <div id="switch4" class="switch">On</div>
-    <button onclick="switch4()">4</button>
-    <div id="switch5" class="switch">On</div>
-    <button onclick="switch5()">5</button>
-    <div id="switch6" class="switch">On</div>
-    <button onclick="switch6()">6</button>
-    <div id="switch7" class="switch">On</div>
-    <button onclick="switch7()">7</button>
-    
-    <script>
-        let allSwitches = document.getElementsByClassName("switch");
+    <form action="/ToDoList/myIndex.html" method="GET">
+        <h2>My Form</h2>
+        <div>
 
-        function MySwitch(index)
-        {
-            switch(index)
-            {
-                case 1:
-                    document.getElementById('switch1').innerText = "Off"
-                    document.getElementById('switch4').innerText = "Off"
-                    break;
-            }
-        }
+            <label>First Name</label>
+            <input id="myInput" name="fname" id="fname" value="John">
+        </div>
+        <div>
+
+            <label>Last Name</label>
+            <input id="myInput" name="lname" id="lname" value="Doe">
+        </div>
+        <div>
+            <label>Date of Birth</label>
+            <input type="date" name="DOB" id='date' value="2025-06-17">
+        </div>
+        <div>
+            <label>Favourite Colour</label>
+            <input type="color" name="colour" value="#ff0000">
+        </div>
+        <div>
+            <label>My Password</label>
+            <input type="password" name="password">
+        </div>
+        <div>
+            <label>Picture</label>
+            <input type="url" name="image">
+        </div>
+        <button>Submit</button>
+    </form>
+    <script>
+        let today = new Date();
+        
+        //document.getElementById("date").value = `${today.getFullYear()}-${today.getMonth()+1}-${today.get}`;
     </script>
 </body>
 </html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+<body id="myBody">
+    <div id="name"></div>
+
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        let fname = urlParams.get('fname') || '';
+        let lname = urlParams.get('lname') || '';
+        let dob = new Date(urlParams.get('DOB')) || new Date();
+        let colour = urlParams.get('colour') || '';
+        let daysOfTheWeek = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]
+        document.getElementById('myBody').style.backgroundColor = colour;
+        console.log(colour)
+        document.getElementById('name').innerText = `Hello ${fname} ${lname}.\nYou were born on a ${daysOfTheWeek[dob.getDay()]}`;
+    </script>
+</body>
+</html>
