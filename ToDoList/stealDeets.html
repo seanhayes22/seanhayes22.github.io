@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Stealing Your Deets</title>
+    </head>
+    <body>
+        <h1>Stealing Your Deets</h1>
+        <p id="name"></p>
+        <p id="dob"></p>
+        <p id="colour"></p>
+        <p id="coolestTeacher"></p>
+        <p id="pwd"></p>
+        <p id="progressBar">
+            <span id="greyThing"><span id="progress"></span></span>
+        </p>
+        <script>
+            const params = new URLSearchParams(window.location.search);
+
+            name();
+            birthday();
+            colour();
+            coolestTeacher();
+            password();
+
+            function name()
+            {
+                if (params.has("firstName") || params.has("lastName"))
+                {
+                    document.getElementById("name").innerText = `Hello, ${params.get("firstName") || ""} ${params.get("lastName") || ""}.`;
+                }
+            }
+
+            function birthday()
+            {
+                if (params.has("dob"))
+                {
+                    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                    let dob = new Date(params.get("dob"));
+                    let day = weekdays[dob.getDay()];
+                    
+                    const month = dob.getMonth();
+                    let season;
+
+                    if (month == 11 || month == 0 || month == 1)
+                    {
+                        season = "summer";
+                    }
+                    else if (month >= 2 && month <= 4)
+                    {
+                        season = "autumn";
+                    }
+                    else if (month >= 5 && month <= 7)
+                    {
+                        season = "winter";
+                    }
+                    else if (month >= 8 && month <= 10)
+                    {
+                        season = "spring";
+                    }
+
+                    document.getElementById("dob").innerText = `You were born on a ${day} in ${season}.`;
+                }
+            }
+
+            function colour()
+            {
+                if (params.has("colour"))
+                {
+                    let colour = params.get("colour");
+                    const colourRegex = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i;
+
+                    // Test colour is a valid hex code
+                    if (colourRegex.test(colour))
+                    {
+                        document.body.style.backgroundColor = colour;
+                        document.getElementById("colour").innerText = `Your favourite colour is ${colour}`;
+
+                        // Convert hex colour to RGB
+                        colour = +("0x" + colour.slice(1).replace( 
+                        colour.length < 5 && /./g, '$&$&'));
+
+                        let r = colour >> 16;
+                        let g = colour >> 8 & 255;
+                        let b = colour & 255;
+
+                        // HSP equation
+                        hsp = Math.sqrt(
+                            0.299 * (r * r) +
+                            0.587 * (g * g) +
+                            0.114 * (b * b)
+                        );
+
+                        if (hsp > 127.5) {
+                            document.body.style.color = "black";
+                            document.getElementById("greyThing").style.backgroundColor = "lightgrey";
+                            document.getElementById("greyThing").style.borderColor = "black";
+                            document.getElementById("progress").style.backgroundColor = "black";
+                        }
+                        else {
+                            document.body.style.color = "white";
+                            document.getElementById("greyThing").style.backgroundColor = "darkgrey";
+                            document.getElementById("greyThing").style.borderColor = "white";
+                            document.getElementById("progress").style.backgroundColor = "white";
+                        }
+                    }
+                }
+            }
+
+            function coolestTeacher()
+            {
+                if (params.has("coolestTeacher"))
+                {
+                    let coolestTeacher = params.get("coolestTeacher");
+                    let msg;
+                    switch (coolestTeacher)
+                    {
+                        case "sean":
+                        msg = "You think Sean's the coolest teacher?? I'm not mad, I'm just disappointed."; 
+                        break;
+                        case "callum":
+                        msg = "You have chosen Callum as the coolest teacher, revealing your wisdom.";
+                        break;
+                        case "myself":
+                        msg = "You chose yourself as the coolest teacher...";
+                        break;
+                        default:
+                        msg = "You did not choose anyone as the coolest teacher! 😥";
+
+                    }
+                    document.getElementById("coolestTeacher").innerText = msg;
+                }
+            }
+
+            function password()
+            {
+                if (params.has("pwd"))
+                {
+                    document.getElementById("pwd").innerText = `Thank you for giving us your password (${params.get("pwd")}). Now uploading viruses to your computer.`;
+                }
+            }
+        </script>
+        <style>
+            #progressBar {
+                height: 10px;
+            }
+
+            #greyThing {
+                border: thin solid;
+                border-radius: 2em;
+                overflow: hidden;
+                display: block;
+                height: 100%;
+                width: 80%;
+            }
+
+            #progress {
+                display: block;
+                height: 100%;
+                animation: progressAnimation 3s ease-in-out;
+            }
+
+            @keyframes progressAnimation {
+                0% { width: 0; }
+                100% { width: 100%; }
+            }
+        </style>
+    </body>
+</html>

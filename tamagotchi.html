@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tamagotchi Pet</title>
+    <style>
+        /* Custom CSS for the Tamagotchi game */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .pet-name {
+            background-color: transparent;
+            border: 0px solid;
+            height: 30px;
+            width: 160px;
+            color: #CCC;
+            text-align:center;
+            margin: auto;
+            font-size: 25px;
+        }
+
+        .tamagotchi-display {
+            background-color: #e0e7ff;
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            position: relative; /* For the message box */
+        }
+
+        .tamagotchi-emoji {
+            font-size: 8rem; /* Larger emoji */
+            margin-bottom: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .tamagotchi-emoji.sleeping {
+            filter: grayscale(80%);
+            opacity: 0.7;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            background-color: #edf2f7;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-weight: bold;
+            color: #4a5568;
+        }
+
+        .stat-bar-container {
+            width: 100%;
+            height: 10px;
+            background-color: #cbd5e0;
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .stat-bar {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+
+        .stat-bar.green { background-color: #48bb78; }
+        .stat-bar.orange { background-color: #f6ad55; }
+        .stat-bar.red { background-color: #ef4444; }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .control-button {
+            flex-grow: 1; /* Allow buttons to grow */
+            background-color: #6366f1;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.2s ease;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+            min-width: 120px; /* Ensure buttons don't get too small */
+        }
+
+        .control-button:hover {
+            background-color: #4f46e5;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .control-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(99, 102, 241, 0.2);
+        }
+
+        .control-button:disabled {
+            background-color: #a7a7a7;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .message-box {
+            position: absolute;
+            top: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            pointer-events: none; /* Allows clicks to pass through */
+        }
+
+        .message-box.show {
+            opacity: 1;
+        }
+
+        .game-over-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        .game-over-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .game-over-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .game-over-overlay.active .game-over-content {
+            transform: translateY(0);
+        }
+
+        .game-over-content h2 {
+            font-size: 2.5rem;
+            color: #ef4444;
+            margin-bottom: 20px;
+        }
+
+        .game-over-content p {
+            font-size: 1.2rem;
+            color: #4a5568;
+            margin-bottom: 30px;
+        }
+
+        .reset-button {
+            background-color: #ef4444;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.2s ease;
+            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+        }
+
+        .reset-button:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .reset-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(239, 68, 68, 0.2);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <input class="pet-name" value='My Virtual Pet'>
+
+        <div class="tamagotchi-display">
+            <div id="tamagotchiEmoji" class="tamagotchi-emoji">🥚</div>
+            <div id="messageBox" class="message-box"></div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span>Hunger</span>
+                <div class="stat-bar-container">
+                    <div id="hungerBar" class="stat-bar"></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <span>Happiness</span>
+                <div class="stat-bar-container">
+                    <div id="happinessBar" class="stat-bar"></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <span>Sleep</span>
+                <div class="stat-bar-container">
+                    <div id="sleepBar" class="stat-bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="feedButton" class="control-button">Feed 🍔</button>
+            <button id="playButton" class="control-button">Play ⚽</button>
+            <button id="sleepButton" class="control-button">Sleep 😴</button>
+        </div>
+    </div>
+
+    <!-- Game Over Overlay -->
+    <div id="gameOverOverlay" class="game-over-overlay">
+        <div class="game-over-content">
+            <h2>Game Over!</h2>
+            <p id="gameOverMessage">Your pet ran away because it was not cared for.</p>
+            <button id="resetButton" class="reset-button">Restart Game</button>
+        </div>
+    </div>
+
+    <script>
+        // Game state variables
+        let tamagotchi = {
+            hunger: 100,
+            happiness: 100,
+            sleep: 100,
+            isAlive: true,
+            isSleeping: false,
+            age: 0, // Age in game cycles
+            deathReason: ""
+        };
+
+        // DOM elements
+        const tamagotchiEmoji = document.getElementById('tamagotchiEmoji');
+        const hungerBar = document.getElementById('hungerBar');
+        const happinessBar = document.getElementById('happinessBar');
+        const sleepBar = document.getElementById('sleepBar');
+        const feedButton = document.getElementById('feedButton');
+        const playButton = document.getElementById('playButton');
+        const sleepButton = document.getElementById('sleepButton');
+        const messageBox = document.getElementById('messageBox');
+        const gameOverOverlay = document.getElementById('gameOverOverlay');
+        const gameOverMessage = document.getElementById('gameOverMessage');
+        const resetButton = document.getElementById('resetButton');
+
+        let gameInterval;
+        let messageTimeout;
+
+        // Function to clamp a value between a min and max
+        function clamp(value, min, max) {
+            return Math.max(min, Math.min(value, max));
+        }
+
+        // Function to display a temporary message
+        function showMessage(message) {
+            messageBox.textContent = message;
+            messageBox.classList.add('show');
+            clearTimeout(messageTimeout); // Clear any existing timeout
+            messageTimeout = setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, 2000); // Message disappears after 2 seconds
+        }
+
+        // Function to update the visual representation of the Tamagotchi's stats
+        function updateStatsDisplay() {
+            // Update hunger bar
+            hungerBar.style.width = `${tamagotchi.hunger}%`;
+            if (tamagotchi.hunger > 70) hungerBar.className = 'stat-bar green';
+            else if (tamagotchi.hunger > 30) hungerBar.className = 'stat-bar orange';
+            else hungerBar.className = 'stat-bar red';
+
+            // Update happiness bar
+            happinessBar.style.width = `${tamagotchi.happiness}%`;
+            if (tamagotchi.happiness > 70) happinessBar.className = 'stat-bar green';
+            else if (tamagotchi.happiness > 30) happinessBar.className = 'stat-bar orange';
+            else happinessBar.className = 'stat-bar red';
+
+            // Update sleep bar
+            sleepBar.style.width = `${tamagotchi.sleep}%`;
+            if (tamagotchi.sleep > 70) sleepBar.className = 'stat-bar green';
+            else if (tamagotchi.sleep > 30) sleepBar.className = 'stat-bar orange';
+            else sleepBar.className = 'stat-bar red';
+        }
+
+        // Function to update the Tamagotchi's emoji based on its state
+        function updateTamagotchiEmoji() {
+            if (!tamagotchi.isAlive) {
+                tamagotchiEmoji.textContent = '👻'; // Ghost emoji for dead
+                tamagotchiEmoji.classList.remove('sleeping');
+                return;
+            }
+
+            if (tamagotchi.isSleeping) {
+                tamagotchiEmoji.textContent = '😴'; // Sleeping emoji
+                tamagotchiEmoji.classList.add('sleeping');
+            } else if (tamagotchi.hunger < 20 || tamagotchi.happiness < 20 || tamagotchi.sleep < 20) {
+                tamagotchiEmoji.textContent = '😢'; // Sad/low health emoji
+                tamagotchiEmoji.classList.remove('sleeping');
+            } else if (tamagotchi.hunger > 80 && tamagotchi.happiness > 80 && tamagotchi.sleep > 80) {
+                tamagotchiEmoji.textContent = '🥳'; // Very happy emoji
+                tamagotchiEmoji.classList.remove('sleeping');
+            }
+            else {
+                tamagotchiEmoji.textContent = '😊'; // Default happy emoji
+                tamagotchiEmoji.classList.remove('sleeping');
+            }
+        }
+
+        // Action functions
+        function feed() {
+            if (!tamagotchi.isAlive) {
+                showMessage("Your pet is gone...");
+                return;
+            }
+            if (tamagotchi.isSleeping) {
+                showMessage("Your pet is sleeping!");
+                return;
+            }
+            tamagotchi.hunger = clamp(tamagotchi.hunger + 20, 0, 100);
+            tamagotchi.happiness = clamp(tamagotchi.happiness + 5, 0, 100); // Small happiness boost
+            showMessage("Yummy! 😋");
+            updateStatsDisplay();
+            updateTamagotchiEmoji();
+        }
+
+        function play() {
+            if (!tamagotchi.isAlive) {
+                showMessage("Your pet is gone...");
+                return;
+            }
+            if (tamagotchi.isSleeping) {
+                showMessage("Your pet is sleeping!");
+                return;
+            }
+            tamagotchi.happiness = clamp(tamagotchi.happiness + 25, 0, 100);
+            tamagotchi.hunger = clamp(tamagotchi.hunger - 10, 0, 100); // Playing makes it hungry
+            showMessage("Whee! 😄");
+            updateStatsDisplay();
+            updateTamagotchiEmoji();
+        }
+
+        function putToSleep() {
+            if (!tamagotchi.isAlive) {
+                showMessage("Your pet is gone...");
+                return;
+            }
+            if (tamagotchi.isSleeping) {
+                showMessage("Your pet is already asleep!");
+                return;
+            }
+            tamagotchi.isSleeping = true;
+            tamagotchi.sleep = clamp(tamagotchi.sleep + 40, 0, 100); // Big sleep boost
+            showMessage("Zzzzz... 😴");
+            updateTamagotchiEmoji();
+            disableButtons(true);
+
+            // Wake up after a certain period (e.g., 5 seconds)
+            setTimeout(() => {
+                tamagotchi.isSleeping = false;
+                showMessage("Good morning! 😊");
+                updateTamagotchiEmoji();
+                disableButtons(false);
+            }, 5000); // Simulates a longer sleep period
+        }
+
+        // Function to disable/enable action buttons
+        function disableButtons(disabled) {
+            feedButton.disabled = disabled;
+            playButton.disabled = disabled;
+            sleepButton.disabled = disabled;
+        }
+
+        // Game loop: periodically decrements stats and checks for death
+        function gameLoop() {
+            if (!tamagotchi.isAlive) {
+                clearInterval(gameInterval); // Stop the game loop if pet is dead
+                return;
+            }
+
+            // Only decrease stats if not sleeping
+            if (!tamagotchi.isSleeping) {
+                tamagotchi.hunger = clamp(tamagotchi.hunger - 5, 0, 100);
+                tamagotchi.happiness = clamp(tamagotchi.happiness - 5, 0, 100);
+                tamagotchi.sleep = clamp(tamagotchi.sleep - 3, 0, 100); // Sleep decreases slower
+            }
+            tamagotchi.age++; // Pet ages with each cycle
+
+            updateStatsDisplay();
+            updateTamagotchiEmoji();
+            checkHealth();
+        }
+
+        // Check if the Tamagotchi is still alive
+        function checkHealth() {
+            if (tamagotchi.hunger <= 0) {
+                tamagotchi.isAlive = false;
+                tamagotchi.deathReason = "starvation! 🍔";
+            } else if (tamagotchi.happiness <= 0) {
+                tamagotchi.isAlive = false;
+                tamagotchi.deathReason = "loneliness! 💔";
+            } else if (tamagotchi.sleep <= 0) {
+                tamagotchi.isAlive = false;
+                tamagotchi.deathReason = "exhaustion! 😵";
+            }
+
+            if (!tamagotchi.isAlive) {
+                clearInterval(gameInterval);
+                gameOverMessage.textContent = `Your pet passed away from ${tamagotchi.deathReason}`;
+                gameOverOverlay.classList.add('active');
+                disableButtons(true);
+            }
+        }
+
+        // Function to reset the game
+        function resetGame() {
+            tamagotchi = {
+                hunger: 100,
+                happiness: 100,
+                sleep: 100,
+                isAlive: true,
+                isSleeping: false,
+                age: 0,
+                deathReason: ""
+            };
+            gameOverOverlay.classList.remove('active');
+            disableButtons(false);
+            updateStatsDisplay();
+            updateTamagotchiEmoji(); // Reset emoji to initial or happy state
+            // Restart the game loop
+            clearInterval(gameInterval); // Clear any old interval first
+            gameInterval = setInterval(gameLoop, 1500); // Game cycle every 1.5 seconds
+            showMessage("A new pet has hatched! 🥚");
+        }
+
+        // Event Listeners
+        feedButton.addEventListener('click', feed);
+        playButton.addEventListener('click', play);
+        sleepButton.addEventListener('click', putToSleep);
+        resetButton.addEventListener('click', resetGame);
+
+        // Initial setup on window load
+        window.onload = function() {
+            resetGame(); // Initialize the game state and start the loop
+        };
+    </script>
+</body>
+</html>
