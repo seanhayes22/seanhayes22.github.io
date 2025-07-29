@@ -235,7 +235,7 @@
 <body>
     <div class="container">
         <!-- Add Pet Name Element -->
-
+ 
         <div class="tamagotchi-display">
             <div id="tamagotchiEmoji" class="tamagotchi-emoji">🥚</div>
             <div id="messageBox" class="message-box"></div>
@@ -304,12 +304,15 @@
         const gameOverMessage = document.getElementById('gameOverMessage');
         const resetButton = document.getElementById('resetButton');
         /* Save the pet name element as a const */
-
+        const petName = document.getElementById("petName");
 
         let gameInterval;
         let messageTimeout;
         /* Add variables here */
-
+        let happiness = 10;
+        let hungriness = 5;
+        let sleepiness = 10;
+        let gameSpeed = 1.5;
 
 
         // Function to clamp a value between a min and max
@@ -514,8 +517,7 @@
 
 
         /* Event Listeners */
-
-
+  
         
 
         // Initial setup on window load
